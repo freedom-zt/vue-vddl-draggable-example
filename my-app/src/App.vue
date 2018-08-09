@@ -3,21 +3,33 @@
     <img src="./assets/logo.png" height="32" width="32">
     <h4>{{ msg }}</h4>
 
-    <div v-for="(list, listName) in layout.dimensions" class="v-col--auto" :key="listName">
+    <div v-for="(list, listName) in layout.tags" class="v-col--auto" :key="listName">
       <div class="panel">
           <div class="panel__heading">
-            <h3>Dimensions {{listName}}</h3>
+            <h3 style="color: palevioletred">Tags {{listName}}</h3>
           </div>
           <div class="panel__body">
-            <vddl-list class="panel__body--list" :list="list" :horizontal="false">
+            <vddl-list class="panel__body--list" :list="list" :allowed-types="['rows','cols']" :horizontal="false">
                 <vddl-draggable class="panel__body--item" v-for="(item, index) in list" :key="item.id"
                   :draggable="item"
+                  :tag="'label'"
                   :index="index"
                   :wrapper="list"
+                  :type="listName"                  
                   effect-allowed="move">
+                  <vddl-nodrag class="nodrag" style="display: inline">
+                    <input type="checkbox" v-model="item.show" />
                   {{item.title}}
+                  </vddl-nodrag>
+                  <vddl-handle
+                    :handle-left="20"
+                    :handle-top="20"
+                    class="handle-metrics"
+                    style="display: inline">
+                    <i class="fa fa-arrows"></i>                    
+                  </vddl-handle>
                 </vddl-draggable>
-                <vddl-placeholder class="red">Drag it here</vddl-placeholder>
+                <vddl-placeholder class="tags">Drop any <strong>tag</strong> here</vddl-placeholder>
             </vddl-list>
           </div>
       </div>
@@ -25,27 +37,39 @@
 
     <div class="panel">
           <div class="panel__heading">
-            <h3>Metrics</h3>
+            <h3 style="color: peru">Metrics</h3>
           </div>
           <div class="panel__body">
-            <vddl-list class="panel__body--list" :list="layout.metrics" :horizontal="false">
+            <vddl-list class="panel__body--list" :list="layout.metrics" :allowed-types="['metrics']" :horizontal="false">
                 <vddl-draggable class="panel__body--item" v-for="(item, index) in layout.metrics" :key="item.id"
                   :draggable="item"
+                  :tag="'label'"
                   :index="index"
                   :wrapper="layout.metrics"
+                  :type="'metrics'"   
                   effect-allowed="move">
+                  <vddl-nodrag class="nodrag" style="display: inline">
+                    <input type="checkbox" v-model="item.show"/>
                   {{item.title}}
+                  </vddl-nodrag>
+                  <vddl-handle
+                    :handle-left="20"
+                    :handle-top="20"
+                    class="handle-metrics"
+                    style="display: inline">
+                    <i class="fa fa-arrows"></i>                    
+                  </vddl-handle>
                 </vddl-draggable>
-                <vddl-placeholder class="red">Drag it here</vddl-placeholder>
+                <vddl-placeholder class="metrics">Drop any <strong>metric</strong> here</vddl-placeholder>
             </vddl-list>
           </div>
     </div>
 
     <div>
-      <p>Dimension on rows: {{layout.dimensions.rows}}</p>
+      <p>Tags on rows: {{layout.tags.rows}}</p>
     </div>
     <div>
-      <p>Dimension on cols: {{layout.dimensions.cols}}</p>
+      <p>Tags on cols: {{layout.tags.cols}}</p>
     </div>
     <div>
       <p>Metrics: {{layout.metrics}}</p>
@@ -61,57 +85,67 @@ export default {
     return {
       msg: "Welcome to vddl Demo",
       layout: {
-        dimensions: {
+        tags: {
           rows: [
             {
               id: 1,
               title: "tag1",
-              name: "tag1name"
+              name: "tag1name",
+              show: true
             },
             {
               id: 2,
               title: "tag2",
-              name: "tag2name"
+              name: "tag2name",
+              show: true
             },
             {
               id: 3,
               title: "tag3",
-              name: "tag3name"
+              name: "tag3name",
+              show: false
             },
             {
               id: 4,
               title: "tag4",
-              name: "tag3name"
+              name: "tag3name",
+              show: false
             }
           ],
           cols: []
         },
         metrics: [
           {
-              id: 1,
-              title: "metric1"
-            },
-            {
-              id: 2,
-              title: "metric2"
-            },
-            {
-              id: 3,
-              title: "metric3"
-            },
-            {
-              id: 4,
-              title: "metric4"
-            },
-            {
-              id: 5,
-              title: "metric5"
-            },
-            {
-              id: 6,
-              title: "metric6"
-            }
-        ]        
+            id: 1,
+            title: "metric1",
+            show: true
+          },
+          {
+            id: 2,
+            title: "metric2",
+            show: true
+          },
+          {
+            id: 3,
+            title: "metric3",
+            show: true
+          },
+          {
+            id: 4,
+            title: "metric4",
+            show: true
+          },
+          {
+            id: 5,
+            title: "metric5",
+            show: true
+          },
+          {
+            id: 6,
+            title: "metric6",
+            show: true
+          }
+        ]
       }
     };
   }
@@ -163,4 +197,27 @@ a {
 .vddl-dragging-source {
   display: none;
 }
+
+.vddl-placeholder.tags {
+  color: palevioletred;
+}
+
+.vddl-placeholder.metrics {
+  color: peru;
+}
+
+/* .handle-metrics {
+  cursor: move;
+  width: 20px;
+  height: 20px;
+  background: url("./assets/logo.png") center center no-repeat;
+  background-size: 20px 20px;
+}
+
+.nodrag {
+  flex: 1;
+  display: flex;
+} */
+
+
 </style>
