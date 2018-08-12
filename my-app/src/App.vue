@@ -66,13 +66,13 @@
     </div>
 
     <div>
-      <p>Tags on rows: {{layout.tags.rows}}</p>
+      <p style="color: palevioletred">Tags on rows: {{layout.tags.rows}}</p>
     </div>
     <div>
-      <p>Tags on cols: {{layout.tags.cols}}</p>
+      <p style="color: palevioletred">Tags on cols: {{layout.tags.cols}}</p>
     </div>
     <div>
-      <p>Metrics: {{layout.metrics}}</p>
+      <p style="color: peru">Metrics: {{layout.metrics}}</p>
     </div>
 
   </div>
